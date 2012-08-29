@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #
 # Copyright (C) 2010 Matthias Buecher (http://www.maddes.net/)
