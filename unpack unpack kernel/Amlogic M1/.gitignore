@@ -1,0 +1,9 @@
+/initramfs/
+/Image
+/Image-ext
+/Image-ext.new
+/Image.new
+/initramfs.cpio
+/initramfs.new.cpio
+/initramfs.new.cpio.pad
+/uImage.new
