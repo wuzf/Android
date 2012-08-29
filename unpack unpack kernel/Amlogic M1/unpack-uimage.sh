@@ -79,7 +79,7 @@ end=`grep -a -b -m 1 --only-matching 'TRAILER!!!' $inputfile | head -1 | cut -f 
 
 if [ ! -z $start ] || [ ! -z $end ]; then
         #11 bytes = length of TRAILER!!! zero terminated string, fixes premature end of file warning in CPIO
-        end=$((end + 14))
+        end=$((end + 110))
         [ -z $DEBUG ] || echo "-D- Kernel start = $start"
         [ -z $DEBUG ] || echo "-D- Kernel end = $end"
         count=$((end - start))

@@ -19,7 +19,7 @@ else
 fi
 
 start=`grep -a -b -m 1 --only-matching '070701' Image-ext | head -1 | cut -f 1 -d :`
-end=$((`grep -a -b -m 1 --only-matching 'TRAILER!!!' Image-ext | head -1 | cut -f 1 -d :` + 14))
+end=$((`grep -a -b -m 1 --only-matching 'TRAILER!!!' Image-ext | head -1 | cut -f 1 -d :` + 110))
 count=$((end - start))
 
 echo "Adding padding to end of initramfs.new.cpio"
@@ -35,8 +35,8 @@ echo "Compressing kernel to LZMA"
 lzma < Image-ext.new > Image.new
 
 echo "Making uImage"
-mkimage -A arm -O linux -T kernel -C lzma -a 80008000 -e 80008000 -d Image.new -n Kyorakernel uImage.new
-
+#mkimage -A arm -O linux -T kernel -C lzma -a 80008000 -e 80008000 -d Image.new -n Kyorakernel uImage.new
+./mkimage -A arm -O linux -T kernel -C lzma -a 0x80008000 -e 0x80008000 -n 'Linux-2.6.34' -d Image.new uImage.new
 
 
 
