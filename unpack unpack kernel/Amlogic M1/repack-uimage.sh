@@ -1,9 +1,11 @@
 #!/bin/bash
 
-cd initramfs
-find . -print0 | cpio --null -ov --format=newc > ../initramfs.new.cpio
-cd ..
-
+#cd initramfs
+#find . -print0 | cpio --null -ov --format=newc > ../initramfs.new.cpio
+#find . | cpio -o -H newc  > ../initramfs.new.cpio
+#cd ..
+./mkbootfs initramfs > initramfs.new.cpio
+#./gen_initramfs_list.sh -o initramfs.new.cpio -u 0 -g 0 ./initramfs/
 oldsize=`ls -l initramfs.cpio | awk '{ print $5 }'`
 newsize=`ls -l initramfs.new.cpio | awk '{ print $5 }'`
 
