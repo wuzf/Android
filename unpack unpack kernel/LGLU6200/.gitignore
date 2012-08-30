@@ -1,3 +1,5 @@
 /ramdisk/
 /boot.img-kernel
 /boot.img-ramdisk.gz
+/recovery.img-kernel
+/recovery.img-ramdisk.gz
