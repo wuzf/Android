@@ -1,0 +1,13 @@
+一、反编译Apk得到Java源代码
+1.反编译
+./dex2jar.sh    classes.dex
+
+2.用jd-gui打开查看源码
+./jd-gui
+
+二、反编译apk生成程序的源代码和图片、XML配置、语言资源等文件 
+1.解压
+java -Xmx2048m -jar apktool.jar d -f unpack.apk OUTDIR
+
+2.打包
+java -Xmx2048m -jar apktool.jar b OUTDIR
