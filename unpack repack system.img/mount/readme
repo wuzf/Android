@@ -1,0 +1,6 @@
+1.直接挂载编辑
+sudo mount -o rw,loop system.img system 
+
+2.卸载
+sudo umount system 
+
