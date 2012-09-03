@@ -1,0 +1,76 @@
+#!/bin/sh
+
+OUT=./
+CMD_DIR=../bin
+IMAGE_IN_DIR=./source
+IMAGE_OUT_DIR=./rockdev/Image
+
+echo "______________________________________"
+echo "\ \ \ \ \ \               / / / / / / "
+echo "         ROCKCHIP OTA TOOLS           "
+echo "/ / / / / / / /       \ \ \ \ \ \ \ \ "
+echo "--------------------------------------"
+echo "/////////////////////////////////////"
+if [ -d $IMAGE_OUT_DIR ];then
+	rm -fr $IMAGE_OUT_DIR
+	mkdir -p $IMAGE_OUT_DIR
+else
+	mkdir -p $IMAGE_OUT_DIR
+fi
+
+rm -fr $OUT/ramdisk.img $OUT/boot.img-* $OUT/temp $OUT/boot-ramdisk \
+       $OUT/ramdisk-recovery.img $OUT/recovery.img-* $OUT/recovery-ramdisk
+
+cd $IMAGE_IN_DIR
+if [ ! -f "boot.img" ];then
+	echo "boot img not found..."
+	exit 0
+elif [ ! -f "Image" ];then
+	echo "kernel img not found..."
+	exit 0
+elif [ ! -f "recovery.img" ];then
+	echo "recovery img not found..."
+	exit 0
+fi
+
+echo "split boot.img"
+$CMD_DIR/split boot.img
+if [ ! -f boot.img-ramdisk.gz ];then
+	echo "hack unpack"
+	$CMD_DIR/mkkrnlimg -r boot.img boot.img-ramdisk.gz
+fi
+mkdir boot-ramdisk
+mkdir temp
+cd boot-ramdisk
+gzip -dc ../boot.img-ramdisk.gz | cpio -i
+cd ..
+
+echo -n "create boot.img with kernel... "
+[ -d $OUT/boot-ramdisk ] && \
+../bin/mkbootfs $OUT/boot-ramdisk | ../bin/minigzip > $OUT/temp/ramdisk.img && \
+../bin/mkbootimg --kernel ./Image --ramdisk $OUT/temp/ramdisk.img --output $OUT/temp/boot.img && \
+mv $OUT/temp/boot.img ../$IMAGE_OUT_DIR && \
+rm -fr $OUT/ramdisk.img $OUT/boot.img-* $OUT/temp $OUT/boot-ramdisk
+echo "done."
+
+echo "/////////////////////////////////////"
+echo "_____________________________________"
+echo "/////////////////////////////////////"
+
+echo "split recovery.img"
+$CMD_DIR/split recovery.img
+mkdir recovery-ramdisk
+mkdir temp
+cd recovery-ramdisk
+gzip -dc ../recovery.img-ramdisk.gz | cpio -i
+cd ..
+
+echo -n "create recovery.img with kernel... "
+[ -d $OUT/recovery-ramdisk ] && \
+../bin/mkbootfs $OUT/recovery-ramdisk | ../bin/minigzip > $OUT/temp/ramdisk-recovery.img && \
+../bin/mkbootimg --kernel ./Image --ramdisk $OUT/temp/ramdisk-recovery.img --output $OUT/temp/recovery.img && \
+mv $OUT/temp/recovery.img ../$IMAGE_OUT_DIR && \
+rm -fr $OUT/ramdisk-recovery.img $OUT/recovery.img-* $OUT/temp $OUT/recovery-ramdisk
+echo "done."
+echo "/////////////////////////////////////"
+echo "-------------------------------------"

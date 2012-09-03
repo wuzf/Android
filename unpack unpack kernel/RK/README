@@ -1,0 +1,59 @@
+_________________________________
+/////////////////////////////////
+_________________________________
+  ROCKCHIP OTA IMAGE GEN TOOLS
+_________________________________
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+_________________________________
+STEP 1:
+	put boot.img / recovery.img and kernel zImage
+ (arch/arm/boot/Image)
+
+in source file.
+___________________________________
+dir tree like this before run cmd:
+___________________________________
+-|
+ -bin
+ |
+ -mkotaimage
+ |
+ -source|
+ 		- boot.img
+		|
+		- recovery.img
+		|
+		- Image
+
+STEP 2:
+	enter root directory, cmd as follow:
+____________________
+	./mkotaimage
+____________________
+
+STEP 3:
+	get the ota image from automatically
+generate directory:
+___________________
+	rockdev/Image
+___________________
+___________________________________
+dir tree now like this:
+___________________________________
+-|
+ -bin
+ |
+ -mkotaimage
+ |
+ -source|
+ |		- boot.img
+ |		|
+ |		- recovery.img
+ |		|
+ |		- Image
+ |
+ -rockdev|
+ 		 -Image|
+		       -boot.img
+			   |
+			   -recovery.img
