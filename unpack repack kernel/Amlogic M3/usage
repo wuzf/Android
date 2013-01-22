@@ -1,0 +1,6 @@
+1.解压
+./unpack-uimage.sh uImage
+./unpack-uimage.sh uImage_recovery
+
+2.打包
+./repack-uimage.sh
