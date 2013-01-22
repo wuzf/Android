@@ -1,0 +1,5 @@
+1.解包classes.dex文件
+java -jar baksmali-1.4.1.jar -o . classes.dex
+
+2.重新打包为classes.dex文件
+java -jar smali-1.4.1.jar dir -o _classes.dex
