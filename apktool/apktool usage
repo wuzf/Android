@@ -7,7 +7,7 @@ d2j-dex2jar.bat    classes.dex
 
 二、反编译apk生成程序的源代码和图片、XML配置、语言资源等文件 
 1.解压
-java -Xmx256m -jar apktool.jar d -f unpack.apk OUTDIR
+java -Xmx256m -jar apktool.jar d -f unpack.apk
 
 2.打包
 java -Xmx256m -jar apktool.jar b OUTDIR
